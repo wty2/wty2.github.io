@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>${title}</title>
+  <style>
+    body{
+        margin:0;
+        background-color: black;
+    }
+    .video {
+      display: flex;
+      height:100vh;
+      width: 100vw;
+      top : 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      z-index: 99;
+      transition: all 0.3s;
+    }
+
+    .video-content {
+      height: 100vh;
+      width: 100%;
+      display: flex;
+      align-items: center;
+    }
+
+    video { 
+      display: flex;
+    }
+
+    video.horizontal-img {
+      width: 100%;
+      height: auto;
+      max-height: 100%;
+    }
+  </style>
+</head>
+<body>
+<div class="video">
+  <div class="video-content">
+    <video id="videoID"class="horizontal-img"
+           style="object-fit:fill"
+           src="./video/test1.MP4"
+           preload="metadata"
+           webkit-playsinline="true"
+           playsinline="true"
+           x-webkit-airplay="allow"
+           x5-video-player-type="h5"
+           x5-video-player-fullscreen="true"
+           x5-video-orientation="landscape"
+           muted>
+      抱歉，您的浏览器不支持内嵌视频!
+    </video>
+  </div>
+</div>
+<script type="application/javascript">
+
+  const minute = 1000 * 60;
+  const hour = minute * 60;
+  const day = hour * 24;
+  const year = day * 365;
+
+  var dom = document;
+  var index = 0;
+  var videos = ["test1.MP4", "rapidsave.com_used_the_new_interaction_entity_to_make_it_so-ev166w15dfia1 (1).mp4" ,"rapidsave.com_perfect_parry_counterattack_double_kill_to_end_a-tnj0p9url7la1 (1).mp4"];
+  var path = "./video/"
+  var videoDom = dom.getElementById('videoID');
+  videoDom.play();
+  videoDom.addEventListener('ended', function(event) {
+      const d = new Date();
+      let time = d.getTime();
+      let years = Math.round(d.getTime() / year);
+      let h = addZero(d.getHours());
+      let m = addZero(d.getMinutes());
+      let s = addZero(d.getSeconds());
+
+      console.log(h+"hour" + m + "mint" + s +"second");
+      
+      index += time;
+      index %= videos.length
+      videoDom.src = path + videos[index];
+      videoDom.play();
+  })
+  
+  function addZero(i) {
+    if (i < 10) {i = "0" + i}
+    return i;
+  }
+</script>
+</body>
+</html>
