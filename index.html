@@ -6,8 +6,19 @@
         <title>VIDEO TEST</title>
     </head>
     <body>
-	<iframe src="https://drive.google.com/file/d/1hel_41hmdKyg0rjUGqc8F0PkUaBFQsZ-/preview" width="640" height="480" allow="autoplay"></iframe>
-        <video width="320" height="240" controls>
+        <video autoplay muted loop id="myVideo">
+  		<iframe src="https://drive.google.com/file/d/1hel_41hmdKyg0rjUGqc8F0PkUaBFQsZ-/preview" ></iframe>
+	</video>
+	<style>
+	#myVideo {
+	  position: fixed;
+	  right: 0;
+	  bottom: 0;
+	  min-width: 100%;
+	  min-height: 100%;
+	}
+	</style>
+	    <video width="320" height="240" controls>
             <source src="./vidoe/rapidsave.com_isnt_in_the_circle_yet-rfmsgn4r9mka1 (2).mp4" type="video/mp4">
             <source src="movie.ogg" type="video/ogg">
         Your browser does not support the video tag.
