@@ -51,4 +51,18 @@ input{
     height: 100%;
     background-image: url("../image/mute.png");
     background-size: contain;
+    opacity: 0.2;
+}
+
+#muteinput:checked + #muteicon, #muteinput + #muteicon{
+    transition-delay: 1000ms;
+    transition-duration: 1000ms;
+    transition-property: opacity;
+}
+
+#muteinput:hover + #muteicon{
+    transition-delay: 0ms;
+    transition-duration: 0ms;
+    transition-property: opacity;
+    opacity: 1;
 }
