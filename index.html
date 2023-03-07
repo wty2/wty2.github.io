@@ -6,42 +6,8 @@
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>VIDEOPLAY</title>
-  <style>
-    body{
-        margin:0;
-        background-color: black;
-    }
-    .video {
-      display: flex;
-      height:100vh;
-      width: 100vw;
-      top : 0;
-      bottom: 0;
-      right: 0;
-      left: 0;
-      z-index: 99;
-      transition: all 0.3s;
-    }
-
-    .video-content {
-      height: 100vh;
-      width: 100%;
-      display: flex;
-      justify-content: center;  
-      align-items: center;
-    }
-
-    video { 
-      display: flex;
-    }
-
-    video.horizontal-img {
-      width: auto;
-      height: auto;
-      max-width: 100%; 
-      max-height: 100%;
-    }
-  </style>
+  <link href="css/video.css" rel="stylesheet" type="text/css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
 <div class="video">
@@ -56,12 +22,19 @@
            x5-video-player-type="h5"
            x5-video-player-fullscreen="true"
            x5-video-orientation="landscape"
-           muted
            type='video/mp4'
+           muted
            >
-      抱歉，您的浏览器不支持内嵌视频!
+        ERROR:CAN'T PLAY THE VIDEO
     </video>
+
+    <label id="mute" for="muteinput">	
+        <input id="muteinput" type="checkbox" name="mute" onclick="toggleMute()"/>
+        <span id="muteicon"></span>
+    </label>
+
   </div>
+  <a href="javascript:void(0);" onclick="toggleMute()"></a>
 </div>
 <script type="application/javascript">
 
@@ -73,12 +46,10 @@
   var dom = document;
   var index = 0;
   var oldindex = 0;
-  var videostest = ["https://drive.google.com/uc?export=download&id=1hel_41hmdKyg0rjUGqc8F0PkUaBFQsZ-",
-                    "https://drive.google.com/uc?export=download&id=1q-8flb3mOhRAXrls_B--YA9gdsxGHTGd",
-                    "https://drive.google.com/uc?export=download&id=1HUGraXv02kFIVc81tqC0WODb7Ur5KUTS",
-                    "https://drive.google.com/uc?export=download&id=14Z0W2J8zkotwpCZZ9c4lsOiaexHSDQY7"]
-  var videos = ["test1.MP4", "rapidsave.com_used_the_new_interaction_entity_to_make_it_so-ev166w15dfia1 (1).mp4" ,"rapidsave.com_perfect_parry_counterattack_double_kill_to_end_a-tnj0p9url7la1 (1).mp4"];
-  var path = "./video/"
+  var videostest = ["1hel_41hmdKyg0rjUGqc8F0PkUaBFQsZ-","1q-8flb3mOhRAXrls_B--YA9gdsxGHTGd",
+                    "1HUGraXv02kFIVc81tqC0WODb7Ur5KUTS","14Z0W2J8zkotwpCZZ9c4lsOiaexHSDQY7"]
+  var path = "https://drive.google.com/uc?export=download&id="
+  
   var videoDom = dom.getElementById('videoID');
   window.onload=function(){
     find_next_to_play()
@@ -104,7 +75,7 @@
         index+=1
         index%=videostest.length
     }
-    videoDom.src = videostest[index];
+    videoDom.src = path+videostest[index];
     videoDom.play();
     oldindex=index
     delete d
@@ -112,6 +83,13 @@
   function addZero(i) {
     if (i < 10) {i = "0" + i}
     return i;
+  }
+  var mute=true;
+  function toggleMute() {
+   mute=!mute;
+   videoDom.muted = !videoDom.muted;
+   if(!mute)    $("#muteicon").css("background-image",'url("../image/unmute.png"');
+   else         $("#muteicon").css("background-image",'url("../image/mute.png"');
   }
 </script>
 </body>
