@@ -27,6 +27,7 @@
       height: 100vh;
       width: 100%;
       display: flex;
+      justify-content: center;  
       align-items: center;
     }
 
@@ -35,8 +36,9 @@
     }
 
     video.horizontal-img {
-      width: 100%;
+      width: auto;
       height: auto;
+      max-width: 100%; 
       max-height: 100%;
     }
   </style>
@@ -54,7 +56,9 @@
            x5-video-player-type="h5"
            x5-video-player-fullscreen="true"
            x5-video-orientation="landscape"
-           muted>
+           muted
+           type='video/mp4'
+           >
       抱歉，您的浏览器不支持内嵌视频!
     </video>
   </div>
@@ -68,26 +72,41 @@
 
   var dom = document;
   var index = 0;
+  var oldindex = 0;
+  var videostest = ["https://drive.google.com/uc?export=download&id=1hel_41hmdKyg0rjUGqc8F0PkUaBFQsZ-",
+                    "https://drive.google.com/uc?export=download&id=1q-8flb3mOhRAXrls_B--YA9gdsxGHTGd"]
   var videos = ["test1.MP4", "rapidsave.com_used_the_new_interaction_entity_to_make_it_so-ev166w15dfia1 (1).mp4" ,"rapidsave.com_perfect_parry_counterattack_double_kill_to_end_a-tnj0p9url7la1 (1).mp4"];
   var path = "./video/"
   var videoDom = dom.getElementById('videoID');
-  videoDom.play();
-  videoDom.addEventListener('ended', function(event) {
-      const d = new Date();
-      let time = d.getTime();
-      let years = Math.round(d.getTime() / year);
-      let h = addZero(d.getHours());
-      let m = addZero(d.getMinutes());
-      let s = addZero(d.getSeconds());
+  window.onload=function(){
+    find_next_to_play()
+  }
 
-      console.log(h+"hour" + m + "mint" + s +"second");
-      
-      index += time;
-      index %= videos.length
-      videoDom.src = path + videos[index];
-      videoDom.play();
+  videoDom.addEventListener('ended', function(event) {
+    find_next_to_play()
   })
-  
+  function find_next_to_play(){
+    const d = new Date();
+    let time = d.getTime();
+    /*
+    let years = Math.round(d.getTime() / year);
+    let h = addZero(d.getHours());
+    let m = addZero(d.getMinutes());
+    let s = addZero(d.getSeconds());
+    console.log(h+"hour" + m + "mint" + s +"second");
+    */  
+
+    index += time;
+    index %= videostest.length
+    if (index === oldindex) {
+        index+=1
+        index%=videostest.length
+    }
+    videoDom.src = videostest[index];
+    videoDom.play();
+    oldindex=index
+    delete d
+  }
   function addZero(i) {
     if (i < 10) {i = "0" + i}
     return i;
