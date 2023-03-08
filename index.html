@@ -77,10 +77,34 @@
   $(document).ready(function(){
         show("#loadingdiv");
 	});
-  
+  var windowsizestatus = 0 
   window.onload=function(){
+    windowsize()
+    hide("#"+ videoDom2id);
+    hide("#"+ videoDom1id);
+  }
+
+  videoDom1.addEventListener('ended', function(event) {
+    show("#loadingdiv");
+    find_next_to_play()
+  })
+
+  videoDom2.addEventListener('ended', function(event) {
+    show("#loadingdiv");
+    find_next_to_play()
+  })
+
+  videoDom1.addEventListener("play", (event) => {
+    hide("#loadingdiv");
+  });
+
+  videoDom2.addEventListener("play", (event) => {
+    hide("#loadingdiv");  
+  });
+
+  function openfile(video_ref){
     var file = new XMLHttpRequest();
-      file.open("GET", "word/video_ref.txt");
+      file.open("GET", "word/"+video_ref+".txt");
         file.onreadystatechange = function() {
           if (file.readyState === 4) {
             var allText = file.responseText;
@@ -92,18 +116,7 @@
             }
         }
     file.send(null);
-    hide("#"+ videoDom2id);
-    hide("#"+ videoDom1id);
   }
-
-
-  videoDom1.addEventListener('ended', function(event) {
-    find_next_to_play()
-  })
-
-  videoDom2.addEventListener('ended', function(event) {
-    find_next_to_play()
-  })
 
   function find_index(){
     const d = new Date();
@@ -135,7 +148,6 @@
         show("#"+ videoDom1id);
         hide("#"+ videoDom2id);
         videoDom1.play();
-        hide("#loadingdiv");
         videoDom2.src = path+videostest[index].split('/')[5] ;
         status = 2;
     }
@@ -144,7 +156,6 @@
         show("#"+ videoDom2id);
         hide("#"+ videoDom1id);
         videoDom2.play();
-        hide("#loadingdiv");
         videoDom1.src = path+videostest[index].split('/')[5] ;
         status = 1;
         console.log("hello2?")
@@ -175,11 +186,17 @@
 
   $(window).resize(function(){
 			windowsize();
-        });
+    });
 
     function windowsize(){
-        $("#"+videoDom1id).css("width", $(window).width());
-        $("#"+videoDom1id).css("height", $(window).height());
+        if ((windowsizestatus ===0 || windowsizestatus === 1) & $(window).width() <= $(window).height()){
+            openfile("video_ref_horizontal")
+            windowsizestatus = 2
+        }
+        else if ((windowsizestatus ===0 || windowsizestatus === 2) & $(window).width() >= $(window).height()){
+            openfile("video_ref_straight")
+            windowsizestatus = 1
+        }
     }
 
 </script>
