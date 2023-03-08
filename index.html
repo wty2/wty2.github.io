@@ -74,7 +74,16 @@
   var videoDom2 = dom.getElementById(videoDom2id);
 
   $(document).ready(function(){
-			var file = new XMLHttpRequest();
+        file.send(null);
+        find_index()
+        hide("#"+ videoDom2id);
+        hide("#"+ videoDom1id);
+        videoDom1.src = path+videostest[index].split('/')[5] ;
+        find_next_to_play()
+	});
+  
+  window.onload=function(){
+    var file = new XMLHttpRequest();
       file.open("GET", "word/video_ref.txt");
         file.onreadystatechange = function() {
           if (file.readyState === 4) {
@@ -82,16 +91,7 @@
             videostest = allText.split(', ')
             console.log(videostest)
           }
-        }
-        file.send(null);
-		});
-  
-  window.onload=function(){
-    find_index()
-    hide("#"+ videoDom2id);
-    hide("#"+ videoDom1id);
-    videoDom1.src = path+videostest[index].split('/')[5] ;
-    find_next_to_play()
+    }
   }
 
 
