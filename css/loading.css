@@ -6,39 +6,28 @@
     width : 100vw;
     height : 100vh;
 }
-.lds-facebook {
-    display: flex;
-    width: 20px;
-    height: 20px;
+.lds-dual-ring {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
   }
-  .lds-facebook div {
-    display: flex;
-    position: relative;
-    left: 8px;
-    width: 12px;
-    background: #fff;
-    animation: lds-facebook 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+  .lds-dual-ring:after {
+    content: " ";
+    display: block;
+    width: 100%;
+    height: 100%;
+    margin: 8px;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    border-color: #fff transparent #fff transparent;
+    animation: lds-dual-ring 1.2s linear infinite;
   }
-  .lds-facebook div:nth-child(1) {
-    left: 2px;
-    animation-delay: -0.24s;
-  }
-  .lds-facebook div:nth-child(2) {
-    left: 26px;
-    animation-delay: -0.12s;
-  }
-  .lds-facebook div:nth-child(3) {
-    left: 50px;
-    animation-delay: 0;
-  }
-  @keyframes lds-facebook {
+  @keyframes lds-dual-ring {
     0% {
-      top: 8px;
-      height: 64px;
+      transform: rotate(0deg);
     }
-    50%, 100% {
-      top: 24px;
-      height: 32px;
+    100% {
+      transform: rotate(360deg);
     }
   }
   
