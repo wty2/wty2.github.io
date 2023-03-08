@@ -13,7 +13,7 @@
   <!---<script type="module" src="video.js"></script>--->
 </head>
 <body>
-<div id="loadingdiv" ><div id="loading" class="lds-facebook"><div></div><div></div><div></div></div></div>
+    <div id="loadingdiv" ><div id="loading" class="lds-dual-ring"></div></div>
 <div class="video">
   <div class="video-content">
     <video id="videoID"class="horizontal-img"
@@ -94,7 +94,6 @@
     file.send(null);
     hide("#"+ videoDom2id);
     hide("#"+ videoDom1id);
-    hide("#loadingdiv");
   }
 
 
@@ -126,16 +125,17 @@
   }
 
   function find_next_to_play(){
+    show("#loadingdiv");
     find_index()
     console.log(index, 'video: ', videostest[index].split('/')[5])
     console.log(status)
     if (status === '1')
     {
         console.log("hello?")
-
         show("#"+ videoDom1id);
         hide("#"+ videoDom2id);
         videoDom1.play();
+        hide("#loadingdiv");
         videoDom2.src = path+videostest[index].split('/')[5] ;
         status = 2;
     }
@@ -144,6 +144,7 @@
         show("#"+ videoDom2id);
         hide("#"+ videoDom1id);
         videoDom2.play();
+        hide("#loadingdiv");
         videoDom1.src = path+videostest[index].split('/')[5] ;
         status = 1;
         console.log("hello2?")
