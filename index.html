@@ -7,11 +7,13 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>VIDEOPLAY</title>
   <link href="css/video.css" rel="stylesheet" type="text/css">
+  <link href="css/loading.css" rel="stylesheet" type="text/css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <!--<script type="text/javascript" src="XMLHttpRequest.js"></script>-->
   <!---<script type="module" src="video.js"></script>--->
 </head>
 <body>
+    <div id="loadingdiv" ><div id="loading" class="lds-facebook"><div></div><div></div><div></div></div></div>
 <div class="video">
   <div class="video-content">
     <video id="videoID"class="horizontal-img"
@@ -52,7 +54,6 @@
     </label>
 
   </div>
-  <a href="javascript:void(0);" onclick="toggleMute()"></a>
 </div>
 <script type="application/javascript">
   /*
@@ -74,6 +75,7 @@
   var videoDom2 = dom.getElementById(videoDom2id);
 
   $(document).ready(function(){
+        show("#loadingdiv");
 	});
   
   window.onload=function(){
@@ -92,6 +94,7 @@
     file.send(null);
     hide("#"+ videoDom2id);
     hide("#"+ videoDom1id);
+    hide("#loadingdiv");
   }
 
 
