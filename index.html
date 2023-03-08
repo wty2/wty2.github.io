@@ -8,6 +8,7 @@
   <title>VIDEOPLAY</title>
   <link href="css/video.css" rel="stylesheet" type="text/css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script type="text/javascript" src="XMLHttpRequest.js"></script>
 </head>
 <body>
 <div class="video">
@@ -37,23 +38,37 @@
   <a href="javascript:void(0);" onclick="toggleMute()"></a>
 </div>
 <script type="application/javascript">
-
+  /*
   const minute = 1000 * 60;
   const hour = minute * 60;
   const day = hour * 24;
   const year = day * 365;
-
+  */
   var dom = document;
   var index = 0;
   var oldindex = 0;
-  var videostest = ["1hel_41hmdKyg0rjUGqc8F0PkUaBFQsZ-","1q-8flb3mOhRAXrls_B--YA9gdsxGHTGd",
-                    "1HUGraXv02kFIVc81tqC0WODb7Ur5KUTS","14Z0W2J8zkotwpCZZ9c4lsOiaexHSDQY7"]
+  var videostest = []
   var path = "https://drive.google.com/uc?export=download&id="
   
   var videoDom = dom.getElementById('videoID');
+  
+  $(document).ready(function(){
+			var file = new XMLHttpRequest();
+      file.open("GET", "word/video_ref.txt");
+        file.onreadystatechange = function() {
+          if (file.readyState === 4) {
+            var allText = file.responseText;
+            videostest = allText.split(', ')
+            console.log(videostest)
+          }
+        }
+        file.send(null);
+		});
+  
   window.onload=function(){
     find_next_to_play()
   }
+
 
   videoDom.addEventListener('ended', function(event) {
     find_next_to_play()
@@ -75,8 +90,26 @@
         index+=1
         index%=videostest.length
     }
-    videoDom.src = path+videostest[index];
-    videoDom.play();
+    console.log(index, 'video: ', videostest[index].split('/')[5])
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", path+videostest[index].split('/')[5] , true);
+    xhr.responseType = "arraybuffer";
+    
+    xhr.onload = function(oEvent) {
+        var blob = new Blob([oEvent.target.response], {type: "video/mp4"});
+        videoDOM.src = URL.createObjectURL(blob);
+        videoDom.play();
+    };
+
+    xhr.onprogress = function(oEvent) {
+
+    if (oEvent.lengthComputable) {
+        var percentComplete = oEvent.loaded/oEvent.total;
+            console.log("per: " + percentComplete)// do something with this
+        }
+    }
+    xhr.send();    
     oldindex=index
     delete d
   }
