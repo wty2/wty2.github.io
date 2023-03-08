@@ -8,12 +8,29 @@
   <title>VIDEOPLAY</title>
   <link href="css/video.css" rel="stylesheet" type="text/css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script type="text/javascript" src="XMLHttpRequest.js"></script>
+  <!--<script type="text/javascript" src="XMLHttpRequest.js"></script>-->
+  <!---<script type="module" src="video.js"></script>--->
 </head>
 <body>
 <div class="video">
   <div class="video-content">
     <video id="videoID"class="horizontal-img"
+           style="object-fit:fill"
+           src="./video/test1.MP4"
+           preload="metadata"
+           webkit-playsinline="true"
+           playsinline="true"
+           x-webkit-airplay="allow"
+           x5-video-player-type="h5"
+           x5-video-player-fullscreen="true"
+           x5-video-orientation="landscape"
+           type='video/mp4'
+           muted
+           >
+        ERROR:CAN'T PLAY THE VIDEO
+    </video>
+
+    <video id="videoID2"class="horizontal-img"
            style="object-fit:fill"
            src="./video/test1.MP4"
            preload="metadata"
@@ -50,8 +67,12 @@
   var videostest = []
   var path = "https://drive.google.com/uc?export=download&id="
   
-  var videoDom = dom.getElementById('videoID');
-  
+  var status=1;
+  var videoDom1id = 'videoID'
+  var videoDom2id = 'videoID2'
+  var videoDom1 = dom.getElementById(videoDom1id);
+  var videoDom2 = dom.getElementById(videoDom2id);
+
   $(document).ready(function(){
 			var file = new XMLHttpRequest();
       file.open("GET", "word/video_ref.txt");
@@ -66,14 +87,23 @@
 		});
   
   window.onload=function(){
+    find_index()
+    hide("#"+ videoDom2id);
+    hide("#"+ videoDom1id);
+    videoDom1.src = path+videostest[index].split('/')[5] ;
     find_next_to_play()
   }
 
 
-  videoDom.addEventListener('ended', function(event) {
+  videoDom1.addEventListener('ended', function(event) {
     find_next_to_play()
   })
-  function find_next_to_play(){
+
+  videoDom2.addEventListener('ended', function(event) {
+    find_next_to_play()
+  })
+
+  function find_index(){
     const d = new Date();
     let time = d.getTime();
     /*
@@ -90,29 +120,42 @@
         index+=1
         index%=videostest.length
     }
+  }
+
+  function find_next_to_play(){
+    find_index()
     console.log(index, 'video: ', videostest[index].split('/')[5])
+    console.log(status)
+    if (status === '1')
+    {
+        console.log("hello?")
 
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", path+videostest[index].split('/')[5] , true);
-    xhr.responseType = "arraybuffer";
-    
-    xhr.onload = function(oEvent) {
-        var blob = new Blob([oEvent.target.response], {type: "video/mp4"});
-        videoDOM.src = URL.createObjectURL(blob);
-        videoDom.play();
-    };
-
-    xhr.onprogress = function(oEvent) {
-
-    if (oEvent.lengthComputable) {
-        var percentComplete = oEvent.loaded/oEvent.total;
-            console.log("per: " + percentComplete)// do something with this
-        }
+        show("#"+ videoDom1id);
+        hide("#"+ videoDom2id);
+        videoDom1.play();
+        videoDom2.src = path+videostest[index].split('/')[5] ;
+        status = 2;
     }
-    xhr.send();    
+    else if (status === '2')
+    {
+        show("#"+ videoDom2id);
+        hide("#"+ videoDom1id);
+        videoDom2.play();
+        videoDom1.src = path+videostest[index].split('/')[5] ;
+        status = 1;
+        console.log("hello2?")
+    }
     oldindex=index
     delete d
   }
+  
+  function hide(id){
+    $(id).hide();
+  }
+  function show(id){
+    $(id).show();
+  }
+
   function addZero(i) {
     if (i < 10) {i = "0" + i}
     return i;
