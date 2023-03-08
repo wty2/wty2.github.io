@@ -172,6 +172,16 @@
    if(!mute)    $("#muteicon").css("background-image",'url("../image/unmute.png"');
    else         $("#muteicon").css("background-image",'url("../image/mute.png"');
   }
+
+  $(window).resize(function(){
+			windowsize();
+        });
+
+    function windowsize(){
+        $("#"+videoDom1id).css("width", $(window).width());
+        $("#"+videoDom1id).css("height", $(window).height());
+    }
+
 </script>
 </body>
 </html>
