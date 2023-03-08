@@ -163,7 +163,8 @@
   var mute=true;
   function toggleMute() {
    mute=!mute;
-   videoDom.muted = !videoDom.muted;
+   videoDom1.muted = !videoDom1.muted;
+   videoDom2.muted = !videoDom2.muted;
    if(!mute)    $("#muteicon").css("background-image",'url("../image/unmute.png"');
    else         $("#muteicon").css("background-image",'url("../image/mute.png"');
   }
