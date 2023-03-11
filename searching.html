@@ -7,7 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>VIDEOPLAY</title>
     <link href="css/searching.css" rel="stylesheet" type="text/css">
-    <link href="css/loading.css" rel="stylesheet" type="text/css">
     <link href="css/main.css" rel="stylesheet" type="text/css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
@@ -29,8 +28,20 @@
     function videoarray(pick){
         var video=document.getElementById("resultbox");
         for(var i=0, length=pick.length; i<length; i++){
-            video.innerHTML+="<video class='video' style='object-fit:fill' src='"+path+videos[pick[i]]+"' preload='metadata' webkit-playsinline='true'  playsinline='true' x-webkit-airplay='allow' x5-video-player-type='h5' x5-video-player-fullscreen='true' x5-video-orientation='landscape' type='video/mp4' muted>  ERROR:CAN'T PLAY THE VIDEO</video>";
+            video.innerHTML+="<div class='videobox' ><div class='loadingdiv' id='loadingdiv"+i+"' ><div id='loading' class='lds-dual-ring'></div></div><video class='video'id='video'"+i+" style='object-fit:fill' src='"+path+videos[pick[i]]+"' preload='metadata' webkit-playsinline='true'  playsinline='true' x-webkit-airplay='allow' x5-video-player-type='h5' x5-video-player-fullscreen='true' x5-video-orientation='landscape' type='video/mp4' muted>  ERROR:CAN'T PLAY THE VIDEO</video></div>";
             
+            /*
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "https://cors-anywhere.herokuapp.com/"+path+videos[pick[i]]);
+            xhr.addEventListener('progress', function (event) {
+                // 响应头要有Content-Length
+                if (event.lengthComputable) {
+                let percentComplete = event.loaded / event.total;
+                console.log(percentComplete); // 最后输出1
+                }
+            }, false);
+            xhr.send();
+            */
             /*
             var videoimage=document.getElementsByClassName("video");
             var canvas = document.createElement('canvas');
@@ -41,9 +52,19 @@
             img.src = canvas.toDataURL();
             videoimage[i].after(img)*/
         }
-    }
 
-    
+        for(var i=0, length=pick.length; i<length; i++){
+            var videoimage=document.getElementById("video"+i);
+            console.log("down",i);
+            videoimage.addEventListener("loadeddata", () => {
+                if (videoimage.readyState >= 2) {
+                    console.log("down");
+                    hide("#loadingdiv"+i);
+                }
+            });
+        }
+
+    }
 
     function openfile(video_ref){
         var file = new XMLHttpRequest();
