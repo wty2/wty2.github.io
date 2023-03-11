@@ -111,7 +111,7 @@
             videostest = allText.split(', ');
             console.log(videostest);
             find_index();
-            videoDom1.src = path+videostest[index].split('/')[5] ;
+            videoDom1.src = path+videostest[index];
             find_next_to_play()
             }
         }
@@ -121,13 +121,6 @@
   function find_index(){
     const d = new Date();
     let time = d.getTime();
-    /*
-    let years = Math.round(d.getTime() / year);
-    let h = addZero(d.getHours());
-    let m = addZero(d.getMinutes());
-    let s = addZero(d.getSeconds());
-    console.log(h+"hour" + m + "mint" + s +"second");
-    */  
 
     index += time;
     index %= videostest.length
@@ -140,7 +133,7 @@
   function find_next_to_play(){
     show("#loadingdiv");
     find_index()
-    console.log(index, 'video: ', videostest[index].split('/')[5])
+    console.log(index, 'video: ', videostest[index])
     console.log(status)
     if (status === '1')
     {
@@ -148,7 +141,7 @@
         show("#"+ videoDom1id);
         hide("#"+ videoDom2id);
         videoDom1.play();
-        videoDom2.src = path+videostest[index].split('/')[5] ;
+        videoDom2.src = path+videostest[index] ;
         status = 2;
     }
     else if (status === '2')
@@ -156,7 +149,7 @@
         show("#"+ videoDom2id);
         hide("#"+ videoDom1id);
         videoDom2.play();
-        videoDom1.src = path+videostest[index].split('/')[5] ;
+        videoDom1.src = path+videostest[index];
         status = 1;
         console.log("hello2?")
     }
