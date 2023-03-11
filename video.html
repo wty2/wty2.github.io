@@ -19,7 +19,7 @@
   <div class="video-content">
     <video id="videoID"class="horizontal-img"
            style="object-fit:fill"
-           src="./video/test1.MP4"
+
            preload="metadata"
            webkit-playsinline="true"
            playsinline="true"
@@ -35,7 +35,7 @@
 
     <video id="videoID2"class="horizontal-img"
            style="object-fit:fill"
-           src="./video/test1.MP4"
+
            preload="metadata"
            webkit-playsinline="true"
            playsinline="true"
@@ -95,14 +95,24 @@
     find_next_to_play()
   })
 
-  videoDom1.addEventListener("play", (event) => {
-    hide("#loadingdiv");
-  });
-
-  videoDom2.addEventListener("play", (event) => {
-    hide("#loadingdiv");  
-  });
-
+  function video2loading(){
+    videoDom2.addEventListener("loadeddata", () => {
+      console.log("down2", videoDom1.readyState, status);
+      if (videoDom2.readyState >= 2) {
+        console.log("down22");
+        hide("#loadingdiv");
+      }
+    });
+  }
+  function video1loading(){
+    videoDom1.addEventListener("loadeddata", () => {
+      console.log("down1", videoDom1.readyState, status);
+      if (videoDom1.readyState >= 2) {
+        console.log("down11");
+        hide("#loadingdiv");
+      }
+    });
+  }
   function openfile(video_ref){
     var file = new XMLHttpRequest();
       file.open("GET", "word/"+video_ref+".txt");
@@ -122,9 +132,9 @@
   function find_index(){
     const d = new Date();
     let time = d.getTime();
-
     index += time;
     index %= videostest.length
+    console.log(index, oldindex)
     if (index === oldindex) {
         index+=1
         index%=videostest.length
@@ -132,19 +142,18 @@
   }
 
   function find_next_to_play(){
-    show("#loadingdiv");
     windowsize()
     find_index()
     console.log(index, 'video: ', videostest[index])
     console.log(status)
     if (status === '1')
     {
-        console.log("hello?")
         show("#"+ videoDom1id);
         hide("#"+ videoDom2id);
         videoDom1.play();
         videoDom2.src = path+videostest[index] ;
         status = 2;
+        video1loading()
     }
     else if (status === '2')
     {
@@ -153,12 +162,13 @@
         videoDom2.play();
         videoDom1.src = path+videostest[index];
         status = 1;
-        console.log("hello2?")
+        video2loading()
     }
     oldindex=index
     delete d
   }
-  
+
+
   function hide(id){
     $(id).hide();
   }
