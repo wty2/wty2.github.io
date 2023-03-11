@@ -132,6 +132,7 @@
 
   function find_next_to_play(){
     show("#loadingdiv");
+    windowsize()
     find_index()
     console.log(index, 'video: ', videostest[index])
     console.log(status)
@@ -184,10 +185,14 @@
     function windowsize(){
         if ((windowsizestatus ===0 || windowsizestatus === 1) & $(window).width() <= $(window).height()){
             openfile("video_ref_horizontal")
+            $(".horizontal-img").css("width","auto");
+            $(".horizontal-img").css("height","100vh");
             windowsizestatus = 2
         }
         else if ((windowsizestatus ===0 || windowsizestatus === 2) & $(window).width() >= $(window).height()){
             openfile("video_ref_straight")
+            $(".horizontal-img").css("height","auto");
+            $(".horizontal-img").css("width","100vw");
             windowsizestatus = 1
         }
     }
