@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+            content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>VIDEOPLAY</title>
+    <link href="css/searching.css" rel="stylesheet" type="text/css">
+    <link href="css/loading.css" rel="stylesheet" type="text/css">
+    <link href="css/main.css" rel="stylesheet" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <input type="text" name="password" id="searchingbox" placeholder="searching..." >
+    <button>search</button>
+    <div id="resultbox">
+    </div>
+</body>
+
+<script>
+    var index = 0;
+    var oldindex = 0;
+    var videos = []
+    var pickvideo = []
+    var path = "https://drive.google.com/uc?export=download&id="
+    
+    function videoarray(pick){
+        var video=document.getElementById("resultbox");
+        for(var i=0, length=pick.length; i<length; i++){
+            video.innerHTML+="<video class='video' style='object-fit:fill' src='"+path+videos[pick[i]]+"' preload='metadata' webkit-playsinline='true'  playsinline='true' x-webkit-airplay='allow' x5-video-player-type='h5' x5-video-player-fullscreen='true' x5-video-orientation='landscape' type='video/mp4' muted>  ERROR:CAN'T PLAY THE VIDEO</video>";
+            
+            /*
+            var videoimage=document.getElementsByClassName("video");
+            var canvas = document.createElement('canvas');
+            canvas.width = '100px';
+            canvas.height = '100px';
+            canvas.getContext('2d').drawImage(videoimage[i], 0, 0, canvas.width, canvas.height);
+            var img = document.createElement("img");
+            img.src = canvas.toDataURL();
+            videoimage[i].after(img)*/
+        }
+    }
+
+    
+
+    function openfile(video_ref){
+        var file = new XMLHttpRequest();
+        file.open("GET", "word/"+video_ref+".txt");
+        file.onreadystatechange = function() {
+            if (file.readyState === 4) {
+                var allText = file.responseText;
+                videos = allText.split(', ');
+                console.log(videos);
+                videoarray(pickvideo)
+            }
+        }
+    file.send(null);
+    }
+
+    $(document).ready(function(){
+        openfile("video_ref_horizontal")
+        for (var i=0; i<10; i++){
+            pickvideo.push(i)
+        }
+        for (var i=0; i<10; i++) console.log(pickvideo[i])
+    });
+
+    window.onload=function(){
+
+    }
+
+    $("video").each(function(){
+    var video = $(this).get(0);
+    var canvas = document.createElement("canvas");
+        
+    // set the canvas size
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+        
+    // get the drawing context of the canvas and add the video as an image
+    // this will render the current frame inside the canvas
+    canvas.getContext('2d')
+        .drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    // create an image element
+    var img = document.createElement("img");
+        
+    // set the image source as the base64 string representation 
+    // of the content found in the canvas
+    img.src = canvas.toDataURL();
+    $(this).after(img)
+
+    $(this).hide()
+})
+</script>
+<script>
+</script>
