@@ -151,7 +151,7 @@
         show("#"+ videoDom1id);
         hide("#"+ videoDom2id);
         videoDom1.play();
-        if (status === '0') setTimeout(toggleMute(),1000)
+        if (status === '0') setTimeout(toggleMute(),10000)
         videoDom2.src = path+videostest[index] ;
         status = 2;
         video1loading()
@@ -161,7 +161,7 @@
         show("#"+ videoDom2id);
         hide("#"+ videoDom1id);
         videoDom2.play();
-        if (status === '0') setTimeout(toggleMute(),1000)
+        if (status === '0') setTimeout(toggleMute(),10000)
         videoDom1.src = path+videostest[index];
         status = 1;
         video2loading()
