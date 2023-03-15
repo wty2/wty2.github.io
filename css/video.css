@@ -50,7 +50,7 @@ input{
     height: 100%;
     background-image: url("../image/mute.png");
     background-size: contain;
-    opacity: 0.2;
+    opacity: 0;
 }
 
 #muteinput:checked + #muteicon, #muteinput + #muteicon{
