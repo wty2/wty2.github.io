@@ -1,0 +1,6 @@
+body{
+    --font-headline2-font-size: 28px;
+    --font-headline2-line-height: 40px;
+    --font-headline2-font-weight: 500;
+    margin:0;
+}

@@ -1,0 +1,32 @@
+#title{
+    font-size: var(--font-headline2-font-size);
+    line-height: var(--font-headline2-line-height);
+    font-weight: var(--font-headline2-font-weight);
+    font-family: Roboto, 'Helvetica Neue', Helvetica, Arial, 'PingFang TC', '黑體-繁', 'Heiti TC', '蘋果儷中黑', 'Apple LiGothic Medium', '微軟正黑體', 'Microsoft JhengHei', sans-serif;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    margin-block-end: 0.83em;
+    margin: 0;
+    word-wrap: break-word;
+}
+
+pre{
+    white-space: break-spaces;
+}
+
+#content{
+    font-size: 16px;
+    line-height: 28px;
+    word-break: break-word;
+}
+
+#image>img{
+    margin:0;
+    width:100%;
+    height: auto;
+    max-width: 100vw;
+}
+
+.contentbox{
+    padding:5%;
+}
